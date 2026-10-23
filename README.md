@@ -37,6 +37,8 @@ Every quantity shows its source and a validation status, and everything runs off
 |---|---|
 | ![selection](docs/images/selection.png) | ![golgi](docs/images/golgi_centrosome.png) |
 
+![Diffusion simulation](docs/images/simulation.png)
+
 ## Install on Windows (one click)
 
 1. Extract the project zip (right-click → **Extract All**).
