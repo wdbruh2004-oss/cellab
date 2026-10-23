@@ -32,6 +32,13 @@ Every quantity shows its source and a validation status, and everything runs off
 |---|---|
 | ![selection](docs/images/selection.png) | ![golgi](docs/images/golgi_centrosome.png) |
 
+## Install on Windows (one click)
+
+1. Extract the project zip (right-click → **Extract All**).
+2. Double-click **`SETUP_CellLab.bat`**. If Windows shows "Windows protected your PC", choose **More info → Run anyway**.
+3. Wait 5–15 minutes. The first run needs internet: it downloads Python and the libraries (~400 MB), then builds and self-tests `CellLab.exe`.
+   It installs CellLab to `%LOCALAPPDATA%\Programs\CellLab`, adds a **CellLab** icon to the desktop and Start menu, and opens the app. After that it runs fully offline.
+
 ## Run from source
 
 ```bash

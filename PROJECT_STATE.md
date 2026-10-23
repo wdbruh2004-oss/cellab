@@ -17,6 +17,10 @@ _Last updated: 2026-10-23, end of session 1 (Phase 1)._
   CLI (`--self-test`, `--screenshot`, `--window-screenshot`, `--select`, `--software-gl`).
 - Packaging: PyInstaller spec with a VTK module allowlist; Linux bundle built and
   self-tested; Windows script, Inno Setup installer and GitHub Actions CI written.
+- One-click Windows setup (`SETUP_CellLab.bat` -> `packaging/install_windows.ps1`): builds and
+  self-tests CellLab.exe, installs it per-user, adds desktop/Start-menu shortcuts. PowerShell
+  scripts syntax-checked with pwsh 7.4 on Linux; not yet executed on Windows.
+- VTK warnings go to `%LOCALAPPDATA%\CellLab\CellLab\vtk.log` (no pop-up windows on Windows).
 
 ## Environment of session 1
 

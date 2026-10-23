@@ -5,6 +5,7 @@ hepatocyte (liver cell). Everything runs locally and no internet connection is u
 
 ## Installing
 
+**Windows (from the project folder):** double-click `SETUP_CellLab.bat`. It builds CellLab, adds a desktop icon and opens the app (first run needs internet, 5–15 min).
 **Windows (installer):** run `CellLab-<version>-win64-setup.exe` and start CellLab from the
 Start menu.
 **Windows (portable):** unzip `CellLab-<version>-win64-portable.zip` anywhere and run

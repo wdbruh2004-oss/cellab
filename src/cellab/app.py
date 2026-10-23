@@ -35,6 +35,7 @@ def run(argv: list[str] | None = None) -> int:
     QtCore.QCoreApplication.setOrganizationName(cellab.APP_NAME)
     QtCore.QCoreApplication.setApplicationName(cellab.APP_NAME)
     app = QtWidgets.QApplication.instance() or QtWidgets.QApplication(sys.argv[:1])
+    _redirect_vtk_messages()
     apply_theme(app)
     app.setWindowIcon(app_icon())
 
@@ -79,6 +80,25 @@ def run(argv: list[str] | None = None) -> int:
             app.exit(code)
         QtCore.QTimer.singleShot(400, _test)
     return app.exec()
+
+
+def _redirect_vtk_messages() -> None:
+    """Send VTK warnings to a log file; on Windows they would otherwise open pop-up windows."""
+    from pathlib import Path
+
+    from PySide6 import QtCore
+    from vtkmodules.vtkCommonCore import vtkFileOutputWindow, vtkOutputWindow
+
+    folder = Path(QtCore.QStandardPaths.writableLocation(
+        QtCore.QStandardPaths.StandardLocation.AppLocalDataLocation))
+    try:
+        folder.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        return
+    out = vtkFileOutputWindow()
+    out.SetFileName(str(folder / "vtk.log"))
+    out.SetFlush(True)
+    vtkOutputWindow.SetInstance(out)
 
 
 def _splash_pixmap(name: str, version: str):
