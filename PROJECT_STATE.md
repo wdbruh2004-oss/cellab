@@ -38,7 +38,9 @@ not available.**
 
 ## Tests executed
 
-- `xvfb-run -a uv run pytest`: **71 passed** (about 65 s).
+- GitHub Actions (https://github.com/wdbruh2004-oss/cellab): Linux job green (ruff, 72 tests, bundle + self-test); Windows job green (72 tests, PyInstaller exe + self-test, Inno Setup installer); release `latest-build` published with installer, portable zip and Linux tarball.
+
+- `xvfb-run -a uv run pytest`: **72 passed** (about 70 s).
 - `uv run ruff check src tests`: clean.
 - Packaged Linux app `build/dist/CellLab/CellLab --self-test`: `"ok": true`. It covers
   validation, centre pick, highlight and screenshot.
@@ -46,7 +48,7 @@ not available.**
 
 ## Known errors and limitations
 
-- The Windows executable and installer have **not been built or run yet** (they require Windows).
+- The Windows executable and installer are built and self-tested in CI (GitHub `windows-latest`, Mesa software OpenGL) but not yet run on a real Windows desktop with a GPU.
 - Software OpenGL frame time is about 0.6 s at 1400×1000. Interaction LOD helps; a real GPU is expected to be about 100× faster (not measured).
 - Labels are re-laid out after interaction ends, not continuously while dragging.
 - Selection highlight is a translucent shell; there is no silhouette outline yet.
@@ -59,9 +61,7 @@ See TASKS.md (W1, S1, S2, L1, P1, U1, U2 and Phases 5–8).
 
 ## Exact next implementation step
 
-**W1:** on a Windows 10/11 x64 machine, run
-`powershell -ExecutionPolicy Bypass -File packaging\build_windows.ps1`. Confirm that
-`build\self_test.json` reports `"ok": true`, then install `CellLab-0.1.0-win64-setup.exe` and
-check start-up, HiDPI labels and mouse picking. Then start **S2** by writing
+**W1:** install `CellLab-0.1.0-win64-setup.exe` (release `latest-build`) on a Windows 10/11 x64
+desktop and check start-up, HiDPI labels, GPU rendering and mouse picking. Then start **S2** by writing
 `scripts/import_go.py`, which reads a downloaded `go-basic.obo` (CC BY 4.0) into
 `data/packs/go/` and verifies every `go.id` in `structures.json`.

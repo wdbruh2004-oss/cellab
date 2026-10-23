@@ -22,11 +22,12 @@ Legend: `[x]` done and tested · `[~]` done, not yet verified on the target plat
 - [x] Validation report and `--self-test`
 - [x] 71 tests (unit, scientific invariants, GUI end-to-end, offline guard); ruff clean
 - [x] Linux one-folder bundle built and self-tested (`build/CellLab-0.1.0-linux-x86_64.tar.gz`)
-- [~] Windows bundle and installer: `packaging/build_windows.ps1`, `installer.iss` and CI job written but **not yet run on Windows**
+- [x] Windows bundle and installer built in CI (windows-latest, Mesa software GL): 72 tests pass, packaged `CellLab.exe` self-test passes, `CellLab-0.1.0-win64-setup.exe` published as the `latest-build` release
+- [ ] Windows installer verified on a real desktop with a GPU (first user run)
 
 ## Open items (priority order)
 
-1. [ ] **W1** Run `packaging\build_windows.ps1` on Windows 10/11 (or push and run the CI `windows` job). Check the self-test, HiDPI scaling and start-up time.
+1. [~] **W1** CI builds and self-tests on Windows. Still open: install `CellLab-*-win64-setup.exe` on a real Windows 10/11 desktop and check HiDPI scaling, GPU rendering and start-up time.
 2. [ ] **S1** Verify the Table 12-2 transcription and textbook ranges against physical copies.
 3. [ ] **S2** Import licensed GO and UniProt releases offline. Verify every GO ID and accession; show official names and definitions with licence notices.
 4. [ ] **L1** Choose the project licence (needed for the installer's licence page).
@@ -49,6 +50,6 @@ Legend: `[x]` done and tested · `[~]` done, not yet verified on the target plat
 
 ## Phase 8 — Production release (from spec)
 
-- [~] Installer · [~] Executable · [ ] Local scientific databases · [x] Assets · [x] User manual
+- [x] Installer (CI) · [x] Executable (CI) · [ ] Local scientific databases · [x] Assets · [x] User manual
 - [x] Developer documentation · [x] Automated tests · [ ] Benchmark reports · [x] Licence notices
 - [ ] Update and expansion architecture
