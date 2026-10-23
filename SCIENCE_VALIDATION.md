@@ -99,7 +99,19 @@ Their format is test-enforced. Verification against downloaded, licensed release
 (UniProt and GO are both CC BY 4.0) is TASKS.md item S2. No database records are redistributed;
 only identifiers and the project's own summaries are included.
 
-## 7. References
+## 7. Diffusion simulation
+
+- Engine: Brownian dynamics, Gaussian steps with per-axis variance 2·D·dt (dt = 0.1 ms). Moves ending
+  inside an organelle, the nucleus or outside the plasma membrane are rejected.
+- Validation: in free space the mean squared displacement equals 6·D·t (test, within 5%); particles
+  never occupy forbidden space (test); organelles reduce the effective D (test).
+- Parameters: GFP translational D = 27 µm²/s in cytoplasm and 87 µm²/s in water (Swaminathan et al.
+  1997, status *approximate*, to verify under S1).
+- Limitations: point particles; the cytoplasmic D already contains macromolecular crowding, so the
+  extra organelle obstruction is an upper-bound illustration; no binding, flow, active transport or
+  passage through nuclear pores.
+
+## 8. References
 
 Full citations are in `src/cellab/data/knowledge/references.json` and in each inspector page.
 Main sources:

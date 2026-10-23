@@ -24,7 +24,12 @@ Every quantity shows its source and a validation status, and everything runs off
 - **Structure browser** with visibility toggles, isolate/show-all and search (names, synonyms,
   GO IDs, genes, accessions).
 - **Validation report** (model vs reference) and a `--self-test` for packaged builds.
-- **71 automated tests:** knowledge-base integrity, reference transcription, geometry maths,
+- **Simulation (Phase 6, first engine):** Brownian diffusion of tracer molecules (GFP-sized protein,
+  D = 27 µm²/s in cytoplasm) through the cell, blocked by organelles, the nucleus and the membrane.
+  Live particles in 3D and a mean-squared-displacement plot against free 6·D·t diffusion.
+- **Learning (Phase 7, first tools):** a narrated 14-stop guided tour and a quiz generated from the
+  cited knowledge base, with immediate feedback, the source of every answer and "Show in 3D".
+- **83 automated tests:** knowledge-base integrity, reference transcription, geometry maths,
   exact no-overlap packing, mesh volumes, validation, inspector, and end-to-end GUI including
   real mouse picking and a no-network guard.
 

@@ -71,6 +71,19 @@ The **In this model** block shows how a compartment is realized:
 **Science → Scientific validation report** compares every compartment with the reference
 table (Alberts et al. 2014, Table 12-2).
 
+## Simulating diffusion
+
+Open **Simulate** (`Ctrl+D`). Choose a molecule (or a custom diffusion coefficient), the number of
+particles and the simulation speed, then press **Release**. Particles start near the nucleus, or at
+the selected structure. The plot compares their mean squared displacement with free diffusion
+(6·D·t); the ratio D_eff / D shows how much the organelles slow them down.
+
+## Guided tour and quiz
+
+**Learn → Guided tour** (`Ctrl+T`) visits 14 structures with a short narration; use Next/Previous.
+**Learn → Quiz** (`Ctrl+Shift+Q`) asks 10 questions built from the cited data. After each answer it
+shows the explanation and source, and **Show in 3D** flies to the structure.
+
 ## Isolating structures
 
 Select a structure, then press **Isolate** in the inspector to show only it and the membrane

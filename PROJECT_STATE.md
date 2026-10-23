@@ -20,6 +20,8 @@ _Last updated: 2026-10-23, end of session 1 (Phase 1)._
 - One-click Windows setup (`SETUP_CellLab.bat` -> `packaging/install_windows.ps1`): builds and
   self-tests CellLab.exe, installs it per-user, adds desktop/Start-menu shortcuts. PowerShell
   scripts syntax-checked with pwsh 7.4 on Linux; not yet executed on Windows.
+- Session 2: diffusion simulation (sim/diffusion.py, model/obstacles.py, Simulation dock),
+  guided tour and quiz (edu/learning.py, ui/learning.py, Learn menu). 83 tests pass locally.
 - VTK warnings go to `%LOCALAPPDATA%\CellLab\CellLab\vtk.log` (no pop-up windows on Windows).
 
 ## Environment of session 1

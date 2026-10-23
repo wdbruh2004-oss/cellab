@@ -42,11 +42,13 @@ Legend: `[x]` done and tested · `[~]` done, not yet verified on the target plat
 
 ## Phase 6 — Advanced simulation (from spec)
 
-- [ ] Engine interface on top of `CellModel`; optional molecular dynamics, spatial models, electrophysiology using validated engines
+- [x] First engine: Brownian diffusion of tracers with organelle exclusion, MSD validated against 6·D·t, live 3D particles and MSD plot
+- [ ] Engine interface on top of `CellModel`; further engines (reaction–diffusion, membrane electrophysiology, molecular dynamics via validated packages)
 
 ## Phase 7 — Education and assistant (from spec)
 
-- [ ] Structured courses, quizzes, local search, optional offline AI
+- [x] Guided tour (14 narrated stops) and knowledge-base quiz with cited feedback; local search (Phase 1)
+- [ ] Structured multi-lesson courses, progress tracking, optional offline AI assistant
 
 ## Phase 8 — Production release (from spec)
 
