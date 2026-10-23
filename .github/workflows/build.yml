@@ -75,3 +75,25 @@ jobs:
           path: |
             build/CellLab-*-win64-portable.zip
             build/CellLab-*-win64-setup.exe
+
+  release:
+    needs: [test-linux, windows]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Publish the "latest-build" release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          ls -la dist
+          gh release delete latest-build --repo "$REPO" --yes --cleanup-tag || true
+          gh release create latest-build dist/* --repo "$REPO" --target "$GITHUB_SHA" --prerelease \
+            --title "CellLab - latest build" \
+            --notes "Automated build of ${GITHUB_SHA}. Windows: download and run CellLab-*-win64-setup.exe (adds a desktop icon). Portable: unzip CellLab-*-win64-portable.zip and run CellLab.exe. Linux: extract the tar.gz and run CellLab/CellLab."

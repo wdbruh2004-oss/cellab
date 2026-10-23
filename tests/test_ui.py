@@ -201,3 +201,19 @@ def test_focus_raises_section_plane_for_hidden_target(win, qtbot):
     assert win.scene.section_z >= center[2]
     win.section_slider.setValue(500)
     win.scene.reset_camera()
+
+
+def test_viewport_is_interactive_even_when_pyvista_off_screen(qapp, monkeypatch):
+    """Regression: PYVISTA_OFF_SCREEN=true (set by headless CI actions) removed the interactor."""
+    import pyvista
+    from PySide6 import QtWidgets
+
+    from cellab.ui.viewport import Viewport
+    monkeypatch.setattr(pyvista, "OFF_SCREEN", True)
+    host = QtWidgets.QWidget()
+    vp = Viewport(host)
+    try:
+        assert vp.plotter.iren is not None
+    finally:
+        vp.close()
+        host.deleteLater()

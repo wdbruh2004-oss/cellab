@@ -20,7 +20,11 @@ class Viewport(QtCore.QObject):
 
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__(parent)
-        self.plotter = QtInteractor(parent, auto_update=False)
+        # Always interactive: PYVISTA_OFF_SCREEN (set by some CI/headless setups) would otherwise
+        # create the widget without a render-window interactor.
+        self.plotter = QtInteractor(parent, auto_update=False, off_screen=False)
+        if self.plotter.iren is None:
+            raise RuntimeError("the 3D view has no interactor (off-screen rendering is forced)")
         self.widget: QtWidgets.QWidget = self.plotter.interactor
         self.widget.setMinimumSize(320, 240)
         self.scene: CellScene | None = None
