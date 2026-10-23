@@ -10,13 +10,16 @@ import numpy as np
 from PySide6 import QtCore, QtGui, QtWidgets
 
 import cellab
+from cellab.edu.learning import generate_quiz, load_tour
 from cellab.model.cell_model import CellModel, build_cell_model
 from cellab.render.scene import CellScene, PickResult
 from cellab.science.knowledge import KnowledgeBase
 from cellab.science.profile import CellProfile
 from cellab.science.validation import validate_model
 from cellab.ui.dialogs import AboutDialog, ValidationDialog
+from cellab.ui.learning import QuizDialog, TourPanel
 from cellab.ui.panels import InspectorPanel, StructurePanel
+from cellab.ui.simulation_panel import SimulationPanel
 from cellab.ui.viewport import Viewport
 
 SECTION_STEPS = 1000
@@ -43,8 +46,18 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(self.viewport.widget)
         self.structures = StructurePanel(kb)
         self.inspector = InspectorPanel(kb)
+        self.simulation = SimulationPanel(kb)
+        self.tour = TourPanel(kb, load_tour(kb), self._tour_goto)
         self._dock("Structures", self.structures, QtCore.Qt.DockWidgetArea.LeftDockWidgetArea, 300)
-        self._dock("Scientific inspector", self.inspector, QtCore.Qt.DockWidgetArea.RightDockWidgetArea, 420)
+        self.inspector_dock = self._dock("Scientific inspector", self.inspector,
+                                         QtCore.Qt.DockWidgetArea.RightDockWidgetArea, 420)
+        self.simulation_dock = self._dock("Simulation", self.simulation,
+                                          QtCore.Qt.DockWidgetArea.RightDockWidgetArea, 420)
+        self.tabifyDockWidget(self.inspector_dock, self.simulation_dock)
+        self.inspector_dock.raise_()
+        self.tour_dock = self._dock("Guided tour", self.tour, QtCore.Qt.DockWidgetArea.BottomDockWidgetArea, 300)
+        self.tour_dock.hide()
+        self.tour.end_btn.clicked.connect(self.tour_dock.hide)
         self._build_actions()
         self.status_sel = QtWidgets.QLabel("No selection")
         self.status_gl = QtWidgets.QLabel("")
@@ -102,6 +115,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.act_shot = self._action("Save screenshot…", lambda: self.save_screenshot(None), "Ctrl+Shift+S")
         self.act_validation = self._action("Scientific validation report…", self.show_validation, "Ctrl+Shift+V")
         self.act_about = self._action(f"About {cellab.APP_NAME}…", self.show_about)
+        self.act_tour = self._action("Guided tour", self.start_tour, "Ctrl+T", tip="Narrated tour of the cell (Ctrl+T)")
+        self.act_quiz = self._action("Quiz", self.show_quiz, "Ctrl+Shift+Q", tip="Test yourself (Ctrl+Shift+Q)")
+        self.act_simulate = self._action("Simulate", self.show_simulation, "Ctrl+D",
+                                         tip="Diffusion of molecules through the cytoplasm (Ctrl+D)")
         self.act_quit = self._action("Quit", self.close, "Ctrl+Q")
 
         tb = QtWidgets.QToolBar("View")
@@ -124,6 +141,9 @@ class MainWindow(QtWidgets.QMainWindow):
         for a in (self.act_labels, self.act_scale):
             tb.addAction(a)
         tb.addSeparator()
+        for a in (self.act_tour, self.act_quiz, self.act_simulate):
+            tb.addAction(a)
+        tb.addSeparator()
         tb.addAction(self.act_validation)
         self.section_slider.valueChanged.connect(self._on_section_slider)
         self.section_slider.sliderPressed.connect(lambda: self.scene and self.scene.begin_interaction())
@@ -143,6 +163,11 @@ class MainWindow(QtWidgets.QMainWindow):
         m = mb.addMenu("&Science")
         m.addAction(self.act_validation)
         m.addAction(self.act_search)
+        m = mb.addMenu("Si&mulate")
+        m.addAction(self.act_simulate)
+        m = mb.addMenu("&Learn")
+        m.addAction(self.act_tour)
+        m.addAction(self.act_quiz)
         m = mb.addMenu("&Help")
         m.addAction(self.act_about)
 
@@ -158,6 +183,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.viewport.attach(self.scene)
         self.structures.set_counts(self.model)
         self.inspector.set_model(self.model)
+        self.simulation.attach(self.model, self.scene, self.viewport.plotter.render, self._selection_point)
         lo, hi = self.scene.section_range()
         self.section_slider.blockSignals(True)
         self.section_slider.setValue(int(round((self.scene.section_z - lo) / (hi - lo) * SECTION_STEPS)))
@@ -294,6 +320,34 @@ class MainWindow(QtWidgets.QMainWindow):
         self.structures.search.setFocus()
         self.structures.search.selectAll()
 
+    # --- learning and simulation ------------------------------------------------------------------
+    def _tour_goto(self, sid: str) -> None:
+        self.inspector_dock.raise_()
+        self.select(sid, None)
+        self.focus_selected()
+
+    def start_tour(self) -> None:
+        if self.scene is None:
+            return
+        self.tour_dock.show()
+        self.tour.show_stop(0)
+
+    def show_quiz(self) -> None:
+        dlg = QuizDialog(lambda: generate_quiz(self.kb, self.profile, n=10),
+                         lambda sid: (self.select(sid, None), self.focus_selected()), self)
+        dlg.show()
+        self._quiz = dlg
+
+    def show_simulation(self) -> None:
+        self.simulation_dock.show()
+        self.simulation_dock.raise_()
+
+    def _selection_point(self):
+        if self.selection is None or self.model is None or not self.kb.get(self.selection[0]).renderable:
+            return None
+        sid, inst = self.selection
+        return self.model.instance_center(sid, inst if inst is not None and inst >= 0 else 0)
+
     # --- reports & files ---------------------------------------------------------------------------
     def mesh_volumes(self) -> dict[str, float]:
         out = {}
@@ -345,6 +399,14 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.select(hit.structure_id, hit.instance)  # exercises highlight extraction
                 ok &= self.scene.highlight_actor is not None or hit.structure_id == "plasma_membrane"
                 self.clear_selection()
+            self.simulation.n.setValue(200)
+            self.simulation.release()
+            self.simulation.stop()
+            for _ in range(3):
+                self.simulation.tick(real_seconds=0.05)
+            report["simulation_ms"] = round(1000 * self.simulation.sim.time, 3)
+            ok &= self.simulation.sim.time > 0 and self.scene.tracer_count() == 200
+            self.simulation.clear()
             import tempfile
             with tempfile.TemporaryDirectory() as tmp:
                 shot = Path(tmp) / "self_test.png"
@@ -377,6 +439,7 @@ class MainWindow(QtWidgets.QMainWindow):
             s = QtCore.QSettings()
             s.setValue("window/geometry", self.saveGeometry())
             s.setValue("window/state", self.saveState())
+        self.simulation.stop()
         self.viewport.close()
         super().closeEvent(event)
 

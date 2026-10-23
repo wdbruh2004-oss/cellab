@@ -217,3 +217,44 @@ def test_viewport_is_interactive_even_when_pyvista_off_screen(qapp, monkeypatch)
     finally:
         vp.close()
         host.deleteLater()
+
+
+def test_simulation_panel_runs(win):
+    panel = win.simulation
+    panel.n.setValue(300)
+    panel.release()
+    panel.stop()
+    for _ in range(3):
+        panel.tick(real_seconds=0.05)
+    assert panel.sim.time > 0
+    assert win.scene.tracer_count() == 300
+    assert "Effective D" in panel.readout.text()
+    panel.clear()
+    assert win.scene.tracer_count() == 0
+
+
+def test_guided_tour_selects_structures(win, qtbot):
+    win.start_tour()
+    assert win.tour_dock.isVisible()
+    first = win.tour.tour.stops[0].structure
+    assert win.selection == (first, None)
+    win.tour.next_btn.click()
+    assert win.selection == (win.tour.tour.stops[1].structure, None)
+    qtbot.waitUntil(lambda: not win.viewport.is_animating(), timeout=10000)
+    win.tour.end_btn.click()
+    assert not win.tour_dock.isVisible()
+    win.section_slider.setValue(500)
+    win.scene.reset_camera()
+
+
+def test_quiz_dialog_scores_answers(win):
+    win.show_quiz()
+    dlg = win._quiz
+    q = dlg.current
+    dlg.choose(q.answer)
+    assert dlg.check() is True and dlg.score == 1
+    dlg.next_question()
+    wrong = (dlg.current.answer + 1) % len(dlg.current.options)
+    dlg.choose(wrong)
+    assert dlg.check() is False and dlg.score == 1
+    dlg.close()

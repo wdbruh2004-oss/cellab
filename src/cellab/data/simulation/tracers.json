@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "tracers": [
+    {
+      "id": "gfp_cytoplasm",
+      "name": "GFP-sized protein (27 kDa) in cytoplasm",
+      "D_um2_s": 27,
+      "status": "approximate",
+      "refs": [{"id": "swaminathan1997", "at": "FRAP, CHO-cell cytoplasm"}, {"id": "milo_phillips", "at": "Ch. 4"}],
+      "note": "Translational diffusion coefficient measured by photobleaching recovery in cytoplasm (about 3x slower than in water, 87 µm²/s). It already includes crowding by macromolecules; CellLab adds obstruction by the rendered organelles on top."
+    },
+    {
+      "id": "gfp_water",
+      "name": "GFP-sized protein (27 kDa) in water (reference)",
+      "D_um2_s": 87,
+      "status": "approximate",
+      "refs": [{"id": "swaminathan1997", "at": "aqueous solution"}],
+      "note": "Free diffusion in water, useful as a comparison to show the slow-down caused by the cell interior."
+    }
+  ]
+}

@@ -47,6 +47,7 @@ STYLES: dict[str, Style] = {
 
 HIGHLIGHT = "#ffe14d"
 HIGHLIGHT_ALT = "#4de1ff"
+TRACER = "#39ff88"
 BACKGROUND_TOP = "#1b2547"
 BACKGROUND_BOTTOM = "#06080f"
 LABEL_TEXT = "#f2f4f8"

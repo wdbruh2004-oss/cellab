@@ -15,7 +15,7 @@ from vtkmodules.vtkRenderingCore import vtkActor, vtkCellPicker, vtkProperty
 from cellab.model.cell_model import CellModel
 from cellab.render.geometry import INSTANCE, build_meshes
 from cellab.render.overlays import LabelOverlay, ScaleBar, project_to_display
-from cellab.render.style import BACKGROUND_BOTTOM, BACKGROUND_TOP, HIGHLIGHT, HIGHLIGHT_ALT, style_for
+from cellab.render.style import BACKGROUND_BOTTOM, BACKGROUND_TOP, HIGHLIGHT, HIGHLIGHT_ALT, TRACER, style_for
 from cellab.science.knowledge import KnowledgeBase
 
 LABELED = ("plasma_membrane", "nucleus", "nucleolus", "nuclear_pore", "chromatin", "rough_er", "smooth_er",
@@ -74,6 +74,8 @@ class CellScene:
         self.labels_visible = True
         self.highlight_actor = None
         self.selection: tuple[str, int] | None = None
+        self._tracer_mesh: pv.PolyData | None = None
+        self._tracer_actor = None
         self.picker = vtkCellPicker()
         self.picker.SetTolerance(0.004)
         self.picker.PickFromListOn()
@@ -392,3 +394,26 @@ class CellScene:
         self.selection = None
         if render:
             self.plotter.render()
+
+    # --- simulation particles -------------------------------------------------------------------
+    def set_tracers(self, points: np.ndarray | None) -> None:
+        """Show (or with None remove) simulated tracer particles as bright points."""
+        if points is None or len(points) == 0:
+            if self._tracer_actor is not None:
+                self.plotter.remove_actor(self._tracer_actor, render=False)
+            self._tracer_actor = self._tracer_mesh = None
+            return
+        pts = np.asarray(points, float)
+        if self._tracer_mesh is None or self._tracer_mesh.n_points != len(pts):
+            if self._tracer_actor is not None:
+                self.plotter.remove_actor(self._tracer_actor, render=False)
+            self._tracer_mesh = pv.PolyData(pts.copy())
+            self._tracer_actor = self.plotter.add_mesh(
+                self._tracer_mesh, color=TRACER, style="points", point_size=5 * self.ui_scale,
+                render_points_as_spheres=True, pickable=False, reset_camera=False, name="__tracers__")
+            self._tracer_actor.GetMapper().AddClippingPlane(self.section_plane)
+        else:
+            self._tracer_mesh.points = pts
+
+    def tracer_count(self) -> int:
+        return 0 if self._tracer_mesh is None else int(self._tracer_mesh.n_points)

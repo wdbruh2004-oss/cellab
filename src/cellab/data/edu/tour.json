@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "title": "Inside a liver cell",
+  "stops": [
+    {"structure": "plasma_membrane", "text": "Start at the boundary. The plasma membrane encloses roughly 5,000 µm³ of a hepatocyte and carries the pumps and receptors that link the cell to the blood."},
+    {"structure": "nucleus", "text": "The nucleus holds the genome and occupies about 6% of the cell volume. Its envelope is a double membrane that is continuous with the endoplasmic reticulum."},
+    {"structure": "nuclear_pore", "text": "Thousands of nuclear pore complexes perforate the envelope. Each is built from about 30 different nucleoporins and gates traffic between nucleus and cytoplasm."},
+    {"structure": "nucleolus", "text": "Inside the nucleus, nucleoli assemble ribosomal subunits from rRNA and ribosomal proteins."},
+    {"structure": "rough_er", "text": "Ribosome-studded ER sheets wrap the nucleus. Here hepatocytes make secreted plasma proteins such as albumin."},
+    {"structure": "golgi", "text": "Proteins move on to the Golgi apparatus, a ribbon of stacked cisternae next to the centrosome, where they are modified and sorted."},
+    {"structure": "centrosome", "text": "The centrosome, with its two orthogonal centrioles, is the main organizer of microtubules."},
+    {"structure": "microtubule", "text": "Microtubules radiate from the centrosome and act as tracks for motor proteins that move organelles and vesicles."},
+    {"structure": "mitochondrion", "text": "Mitochondria fill 22% of a hepatocyte's volume, about 1,700 of them. They produce ATP and run fatty-acid oxidation and the first steps of the urea cycle."},
+    {"structure": "peroxisome", "text": "Peroxisomes oxidize very-long-chain fatty acids and break down hydrogen peroxide with catalase."},
+    {"structure": "endosome", "text": "Endosomes sort material taken up from the cell surface: receptors are recycled, cargo is sent onward for degradation."},
+    {"structure": "lysosome", "text": "Lysosomes are acidic compartments with about 40 kinds of hydrolytic enzymes that break down macromolecules."},
+    {"structure": "ribosome", "text": "Ribosomes translate mRNA into protein, free in the cytosol or bound to the rough ER. A real cell has millions; only a sample is drawn."},
+    {"structure": "keratin_if", "text": "Keratin 8/18 intermediate filaments give hepatocytes mechanical resilience and protect them against stress."}
+  ]
+}
