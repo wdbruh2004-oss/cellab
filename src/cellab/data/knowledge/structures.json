@@ -1,0 +1,367 @@
+{
+  "schema_version": 1,
+  "status_vocabulary": {
+    "sourced": "Transcribed from a specific table or statement in the cited reference.",
+    "textbook": "Standard textbook value or range, cited to the chapter that states it.",
+    "approximate": "Order-of-magnitude or approximate value; treat as indicative only.",
+    "model": "Model parameter chosen inside the cited biological range, or derived from sourced values.",
+    "illustrative": "Visual representation only; carries no quantitative claim."
+  },
+  "structures": [
+    {
+      "id": "plasma_membrane",
+      "name": "Plasma membrane",
+      "category": "Membrane",
+      "synonyms": ["cell membrane", "plasmalemma"],
+      "go": {"id": "GO:0005886", "label": "plasma membrane"},
+      "summary": "Lipid bilayer with embedded and associated proteins that encloses the cell and separates the cytoplasm from the extracellular environment. It controls the exchange of ions and molecules and carries the receptors that let the cell sense its surroundings.",
+      "functions": [
+        "Selective permeability barrier",
+        "Ion gradients maintained by pumps such as the Na+/K+-ATPase",
+        "Receptor-mediated signalling and endocytosis",
+        "Hepatocyte surface specialized into sinusoidal (basolateral), lateral and canalicular (apical) domains"
+      ],
+      "quantities": [
+        {"label": "Lipid bilayer thickness", "value": 5, "unit": "nm", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 10"}]},
+        {"label": "Hepatocyte diameter", "value": [20, 30], "unit": "µm", "status": "textbook", "refs": [{"id": "junqueira", "at": "Liver chapter"}]}
+      ],
+      "markers": [
+        {"gene": "ATP1A1", "protein": "Sodium/potassium-transporting ATPase subunit alpha-1", "uniprot": "P05023", "role": "Na+/K+ pump"},
+        {"gene": "ASGR1", "protein": "Asialoglycoprotein receptor 1", "uniprot": "P07306", "role": "Hepatocyte sinusoidal-surface endocytic receptor"}
+      ],
+      "render_notes": "Drawn as a single translucent ellipsoid surface. Bilayer thickness is not to scale. The polyhedral shape of hepatocytes in tissue, microvilli and bile canaliculi are not modeled.",
+      "refs": [{"id": "alberts6", "at": "Ch. 10, Membrane Structure"}, {"id": "go2023", "at": "GO:0005886"}]
+    },
+    {
+      "id": "cytosol",
+      "name": "Cytosol",
+      "category": "Compartment",
+      "synonyms": ["cytoplasmic matrix"],
+      "go": {"id": "GO:0005829", "label": "cytosol"},
+      "summary": "The aqueous, protein-dense part of the cytoplasm outside membrane-bound organelles. Most protein synthesis on free ribosomes and many metabolic pathways, including glycolysis, take place here.",
+      "functions": ["Site of glycolysis", "Protein synthesis on free ribosomes", "Medium for cytoskeleton-based transport"],
+      "quantities": [
+        {"label": "Share of hepatocyte volume", "value": 54, "unit": "%", "status": "sourced", "refs": [{"id": "alberts6", "at": "Ch. 12, Table 12-2"}]}
+      ],
+      "markers": [],
+      "render_notes": "Not drawn as geometry; it is the space between rendered structures.",
+      "renderable": false,
+      "refs": [{"id": "alberts6", "at": "Ch. 12, Table 12-2"}]
+    },
+    {
+      "id": "nucleus",
+      "name": "Nucleus",
+      "category": "Organelle (double membrane)",
+      "synonyms": ["cell nucleus", "nuclear envelope", "karyon"],
+      "go": {"id": "GO:0005634", "label": "nucleus"},
+      "summary": "Membrane-bounded compartment containing the chromosomes. It is enclosed by the nuclear envelope, two concentric membranes perforated by nuclear pore complexes; the outer nuclear membrane is continuous with the endoplasmic reticulum.",
+      "functions": ["Storage and replication of the nuclear genome", "Transcription and RNA processing", "Regulated nucleocytoplasmic transport through nuclear pores"],
+      "quantities": [
+        {"label": "Share of hepatocyte volume", "value": 6, "unit": "%", "status": "sourced", "refs": [{"id": "alberts6", "at": "Ch. 12, Table 12-2"}]},
+        {"label": "Number per hepatocyte (table value)", "value": 1, "unit": "", "status": "sourced", "refs": [{"id": "alberts6", "at": "Ch. 12, Table 12-2"}], "note": "Hepatocytes are often binucleate or polyploid; the model uses one nucleus."}
+      ],
+      "markers": [
+        {"gene": "LMNA", "protein": "Prelamin-A/C", "uniprot": "P02545", "role": "Nuclear lamina"}
+      ],
+      "render_notes": "The nuclear envelope is drawn as one translucent ellipsoid surface. The two membranes and the perinuclear space (tens of nm) are not resolved at whole-cell scale.",
+      "refs": [{"id": "alberts6", "at": "Ch. 12"}, {"id": "go2023", "at": "GO:0005634"}]
+    },
+    {
+      "id": "nucleolus",
+      "name": "Nucleolus",
+      "category": "Nuclear body (membraneless)",
+      "synonyms": ["nucleoli"],
+      "go": {"id": "GO:0005730", "label": "nucleolus"},
+      "summary": "Membraneless nuclear body that forms around ribosomal RNA genes. Ribosomal RNA is transcribed, processed and assembled with ribosomal proteins into ribosomal subunits here.",
+      "functions": ["rRNA transcription and processing", "Ribosomal subunit assembly"],
+      "quantities": [],
+      "markers": [
+        {"gene": "FBL", "protein": "rRNA 2'-O-methyltransferase fibrillarin", "uniprot": "P22087", "role": "rRNA modification"}
+      ],
+      "render_notes": "Number and size of nucleoli are illustrative.",
+      "refs": [{"id": "alberts6", "at": "Ch. 6"}, {"id": "go2023", "at": "GO:0005730"}]
+    },
+    {
+      "id": "nuclear_pore",
+      "name": "Nuclear pore complex",
+      "category": "Macromolecular complex",
+      "synonyms": ["NPC", "nuclear pore", "nucleoporin"],
+      "go": {"id": "GO:0005643", "label": "nuclear pore"},
+      "summary": "Large protein assembly built from about 30 different nucleoporins that spans both nuclear membranes. It allows passive diffusion of small molecules and selective, receptor-mediated transport of macromolecules.",
+      "functions": ["Import of nuclear proteins", "Export of mRNA and ribosomal subunits"],
+      "quantities": [
+        {"label": "Pores per nucleus (typical mammalian cell)", "value": [3000, 4000], "unit": "", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 12"}]},
+        {"label": "Distinct nucleoporins", "value": 30, "unit": "approx.", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 12"}]},
+        {"label": "Mass (vertebrate)", "value": 125, "unit": "MDa", "status": "approximate", "refs": [{"id": "alberts6", "at": "Ch. 12"}]}
+      ],
+      "markers": [
+        {"gene": "NUP62", "protein": "Nuclear pore glycoprotein p62", "uniprot": "P37198", "role": "Central-channel FG nucleoporin"}
+      ],
+      "render_notes": "Each pore is a small torus about 0.12 µm across. Rendered count is inside the textbook range.",
+      "refs": [{"id": "alberts6", "at": "Ch. 12"}, {"id": "go2023", "at": "GO:0005643"}]
+    },
+    {
+      "id": "chromatin",
+      "name": "Chromatin",
+      "category": "Nuclear content",
+      "synonyms": ["heterochromatin", "euchromatin", "DNA", "chromosomes", "nucleosome"],
+      "go": {"id": "GO:0000785", "label": "chromatin"},
+      "summary": "DNA packaged with histones and other proteins. Each nucleosome core wraps 147 nucleotide pairs of DNA around a histone octamer. Densely packed heterochromatin is enriched at the nuclear periphery and around nucleoli.",
+      "functions": ["Packaging and protection of the genome", "Regulation of gene expression"],
+      "quantities": [
+        {"label": "DNA per nucleosome core", "value": 147, "unit": "bp", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 4"}]},
+        {"label": "Human haploid genome", "value": 3.2e9, "unit": "bp", "status": "approximate", "refs": [{"id": "alberts6", "at": "Ch. 4"}]}
+      ],
+      "markers": [],
+      "render_notes": "Point cloud enriched toward the envelope and around nucleoli. Illustrative only.",
+      "refs": [{"id": "alberts6", "at": "Ch. 4"}, {"id": "go2023", "at": "GO:0000785"}]
+    },
+    {
+      "id": "rough_er",
+      "name": "Rough endoplasmic reticulum",
+      "category": "Organelle (single membrane)",
+      "synonyms": ["RER", "rough ER", "endoplasmic reticulum", "ER sheets"],
+      "go": {"id": "GO:0005791", "label": "rough endoplasmic reticulum"},
+      "summary": "Ribosome-studded ER membrane sheets, continuous with the outer nuclear membrane. Secreted and membrane proteins are co-translationally inserted, folded and glycosylated here. In hepatocytes it makes plasma proteins such as albumin.",
+      "functions": ["Co-translational protein translocation", "Protein folding and quality control", "Synthesis of secreted plasma proteins (hepatocyte)"],
+      "quantities": [
+        {"label": "Share of hepatocyte volume (cisternae)", "value": 9, "unit": "%", "status": "sourced", "refs": [{"id": "alberts6", "at": "Ch. 12, Table 12-2"}]},
+        {"label": "ER membrane share of total membrane (typical animal cell)", "value": "> 50", "unit": "%", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 12"}]}
+      ],
+      "markers": [
+        {"gene": "SEC61A1", "protein": "Protein transport protein Sec61 subunit alpha isoform 1", "uniprot": "P61619", "role": "Translocon channel"},
+        {"gene": "CALR", "protein": "Calreticulin", "uniprot": "P27797", "role": "Lumenal chaperone"},
+        {"gene": "ALB", "protein": "Albumin", "uniprot": "P02768", "role": "Major secreted hepatocyte protein"}
+      ],
+      "render_notes": "Three fenestrated perinuclear sheets carrying bound ribosomes. The geometry shows the arrangement only; its rendered volume is not matched to the 9% reference.",
+      "refs": [{"id": "alberts6", "at": "Ch. 12"}, {"id": "go2023", "at": "GO:0005791"}]
+    },
+    {
+      "id": "smooth_er",
+      "name": "Smooth endoplasmic reticulum",
+      "category": "Organelle (single membrane)",
+      "synonyms": ["SER", "smooth ER", "ER tubules"],
+      "go": {"id": "GO:0005790", "label": "smooth endoplasmic reticulum"},
+      "summary": "Ribosome-free ER, often tubular. It synthesizes lipids and stores Ca2+. In hepatocytes it is a major site of drug and xenobiotic metabolism by cytochrome P450 enzymes and of glucose-6-phosphatase activity.",
+      "functions": ["Lipid and steroid synthesis", "Detoxification by cytochrome P450 enzymes (hepatocyte)", "Glucose release via glucose-6-phosphatase (hepatocyte)", "Ca2+ storage"],
+      "quantities": [
+        {"label": "Share of hepatocyte volume (smooth ER + Golgi cisternae, combined)", "value": 6, "unit": "%", "status": "sourced", "refs": [{"id": "alberts6", "at": "Ch. 12, Table 12-2"}]}
+      ],
+      "markers": [
+        {"gene": "CYP3A4", "protein": "Cytochrome P450 3A4", "uniprot": "P08684", "role": "Xenobiotic metabolism"},
+        {"gene": "G6PC1", "protein": "Glucose-6-phosphatase catalytic subunit 1", "uniprot": "P35575", "role": "Final step of gluconeogenesis/glycogenolysis"}
+      ],
+      "render_notes": "Tubular network with three-way junctions, drawn as lines. Illustrative; not volume-matched.",
+      "refs": [{"id": "alberts6", "at": "Ch. 12"}, {"id": "go2023", "at": "GO:0005790"}]
+    },
+    {
+      "id": "golgi",
+      "name": "Golgi apparatus",
+      "category": "Organelle (single membrane)",
+      "synonyms": ["Golgi", "Golgi complex", "Golgi stack", "cisterna", "dictyosome"],
+      "go": {"id": "GO:0005794", "label": "Golgi apparatus"},
+      "summary": "Stacks of flattened cisternae with a cis face receiving material from the ER and a trans face sorting it onward. In mammalian cells, stacks are linked laterally into a ribbon close to the nucleus and centrosome.",
+      "functions": ["Glycosylation and processing of proteins and lipids", "Sorting at the trans-Golgi network", "Lysosomal enzyme targeting (mannose-6-phosphate)"],
+      "quantities": [
+        {"label": "Cisternae per stack (typical)", "value": [4, 6], "unit": "", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 13"}]},
+        {"label": "Share of hepatocyte volume (smooth ER + Golgi, combined)", "value": 6, "unit": "%", "status": "sourced", "refs": [{"id": "alberts6", "at": "Ch. 12, Table 12-2"}]}
+      ],
+      "markers": [
+        {"gene": "GOLGA2", "protein": "Golgin subfamily A member 2 (GM130)", "uniprot": "Q08379", "role": "cis-Golgi matrix tether"}
+      ],
+      "render_notes": "Curved cisternae coloured from cis (pale) to trans (deep gold), arranged around the centrosome. Cisterna diameter is illustrative.",
+      "refs": [{"id": "alberts6", "at": "Ch. 13"}, {"id": "go2023", "at": "GO:0005794"}]
+    },
+    {
+      "id": "transport_vesicle",
+      "name": "Transport vesicles",
+      "category": "Organelle (single membrane)",
+      "synonyms": ["vesicle", "COPI", "COPII", "secretory vesicle"],
+      "go": {"id": "GO:0030133", "label": "transport vesicle"},
+      "summary": "Small coated or uncoated vesicles that carry cargo between the ER, Golgi cisternae, endosomes and the plasma membrane.",
+      "functions": ["ER-to-Golgi and intra-Golgi transport", "Secretion"],
+      "quantities": [],
+      "markers": [],
+      "render_notes": "Small spheres near the Golgi. Count and size are illustrative.",
+      "refs": [{"id": "alberts6", "at": "Ch. 13"}, {"id": "go2023", "at": "GO:0030133"}]
+    },
+    {
+      "id": "mitochondrion",
+      "name": "Mitochondrion",
+      "category": "Organelle (double membrane)",
+      "synonyms": ["mitochondria", "powerhouse"],
+      "go": {"id": "GO:0005739", "label": "mitochondrion"},
+      "summary": "Double-membrane organelle that carries out oxidative phosphorylation. It has its own genome, which in humans is 16,569 bp. In hepatocytes, mitochondria also run fatty-acid beta-oxidation, ketogenesis and the first steps of the urea cycle.",
+      "functions": ["ATP synthesis by oxidative phosphorylation", "Citric acid cycle", "Fatty-acid beta-oxidation and ketogenesis (hepatocyte)", "Urea-cycle entry: carbamoyl phosphate synthesis (hepatocyte)"],
+      "quantities": [
+        {"label": "Share of hepatocyte volume", "value": 22, "unit": "%", "status": "sourced", "refs": [{"id": "alberts6", "at": "Ch. 12, Table 12-2"}]},
+        {"label": "Number per hepatocyte", "value": 1700, "unit": "approx.", "status": "sourced", "refs": [{"id": "alberts6", "at": "Ch. 12, Table 12-2"}]},
+        {"label": "Typical diameter", "value": [0.5, 1.0], "unit": "µm", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 14"}]},
+        {"label": "Human mtDNA length", "value": 16569, "unit": "bp", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 14"}]}
+      ],
+      "markers": [
+        {"gene": "TOMM20", "protein": "Mitochondrial import receptor subunit TOM20 homolog", "uniprot": "Q15388", "role": "Outer-membrane import receptor"},
+        {"gene": "ATP5F1A", "protein": "ATP synthase subunit alpha, mitochondrial", "uniprot": "P25705", "role": "F1 ATP synthase"},
+        {"gene": "CPS1", "protein": "Carbamoyl-phosphate synthase [ammonia], mitochondrial", "uniprot": "P31327", "role": "Urea cycle, hepatocyte matrix"}
+      ],
+      "render_notes": "Capsules whose count and total volume reproduce Table 12-2 exactly. Cristae, branching and fission/fusion networks are not modeled.",
+      "refs": [{"id": "alberts6", "at": "Ch. 14"}, {"id": "go2023", "at": "GO:0005739"}]
+    },
+    {
+      "id": "lysosome",
+      "name": "Lysosome",
+      "category": "Organelle (single membrane)",
+      "synonyms": ["lysosomes", "degradative compartment"],
+      "go": {"id": "GO:0005764", "label": "lysosome"},
+      "summary": "Acidic, membrane-bounded degradative compartment containing about 40 types of hydrolytic enzymes that are active at low pH.",
+      "functions": ["Degradation of macromolecules from endocytosis and autophagy", "Nutrient recycling and sensing"],
+      "quantities": [
+        {"label": "Share of hepatocyte volume", "value": 1, "unit": "%", "status": "sourced", "refs": [{"id": "alberts6", "at": "Ch. 12, Table 12-2"}]},
+        {"label": "Number per hepatocyte", "value": 300, "unit": "approx.", "status": "sourced", "refs": [{"id": "alberts6", "at": "Ch. 12, Table 12-2"}]},
+        {"label": "Lumenal pH", "value": [4.5, 5.0], "unit": "", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 13"}]},
+        {"label": "Types of hydrolytic enzymes", "value": 40, "unit": "approx.", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 13"}]}
+      ],
+      "markers": [
+        {"gene": "LAMP1", "protein": "Lysosome-associated membrane glycoprotein 1", "uniprot": "P11279", "role": "Lysosomal membrane"},
+        {"gene": "CTSD", "protein": "Cathepsin D", "uniprot": "P07339", "role": "Lumenal aspartic protease"}
+      ],
+      "render_notes": "Spheres whose count and total volume reproduce Table 12-2.",
+      "refs": [{"id": "alberts6", "at": "Ch. 13"}, {"id": "go2023", "at": "GO:0005764"}]
+    },
+    {
+      "id": "peroxisome",
+      "name": "Peroxisome",
+      "category": "Organelle (single membrane)",
+      "synonyms": ["peroxisomes", "microbody"],
+      "go": {"id": "GO:0005777", "label": "peroxisome"},
+      "summary": "Single-membrane organelle without its own genome. It oxidizes very-long-chain fatty acids, produces and degrades hydrogen peroxide with catalase, and starts plasmalogen synthesis.",
+      "functions": ["Very-long-chain fatty-acid beta-oxidation", "H2O2 breakdown by catalase", "Plasmalogen (ether lipid) synthesis"],
+      "quantities": [
+        {"label": "Share of hepatocyte volume", "value": 1, "unit": "%", "status": "sourced", "refs": [{"id": "alberts6", "at": "Ch. 12, Table 12-2"}]},
+        {"label": "Number per hepatocyte", "value": 400, "unit": "approx.", "status": "sourced", "refs": [{"id": "alberts6", "at": "Ch. 12, Table 12-2"}]}
+      ],
+      "markers": [
+        {"gene": "CAT", "protein": "Catalase", "uniprot": "P04040", "role": "H2O2 decomposition"},
+        {"gene": "PEX14", "protein": "Peroxisomal membrane protein PEX14", "uniprot": "O75381", "role": "Matrix-protein import docking"}
+      ],
+      "render_notes": "Spheres whose count and total volume reproduce Table 12-2.",
+      "refs": [{"id": "alberts6", "at": "Ch. 12"}, {"id": "go2023", "at": "GO:0005777"}]
+    },
+    {
+      "id": "endosome",
+      "name": "Endosome",
+      "category": "Organelle (single membrane)",
+      "synonyms": ["endosomes", "early endosome", "late endosome", "multivesicular body"],
+      "go": {"id": "GO:0005768", "label": "endosome"},
+      "summary": "Membrane-bounded sorting compartments that receive endocytosed material. Cargo is recycled to the plasma membrane or passed through progressively more acidic endosomes to lysosomes.",
+      "functions": ["Sorting of endocytosed receptors and ligands", "Receptor recycling", "Delivery of cargo to lysosomes"],
+      "quantities": [
+        {"label": "Share of hepatocyte volume", "value": 1, "unit": "%", "status": "sourced", "refs": [{"id": "alberts6", "at": "Ch. 12, Table 12-2"}]},
+        {"label": "Number per hepatocyte", "value": 200, "unit": "approx.", "status": "sourced", "refs": [{"id": "alberts6", "at": "Ch. 12, Table 12-2"}]}
+      ],
+      "markers": [
+        {"gene": "EEA1", "protein": "Early endosome antigen 1", "uniprot": "Q15075", "role": "Early-endosome tether"},
+        {"gene": "RAB5A", "protein": "Ras-related protein Rab-5A", "uniprot": "P20339", "role": "Early-endosome identity GTPase"},
+        {"gene": "RAB7A", "protein": "Ras-related protein Rab-7a", "uniprot": "P51149", "role": "Late-endosome identity GTPase"}
+      ],
+      "render_notes": "Spheres whose count and total volume reproduce Table 12-2. Early and late endosomes are not distinguished.",
+      "refs": [{"id": "alberts6", "at": "Ch. 13"}, {"id": "go2023", "at": "GO:0005768"}]
+    },
+    {
+      "id": "ribosome",
+      "name": "Ribosomes",
+      "category": "Macromolecular complex",
+      "synonyms": ["ribosome", "80S", "polysome", "40S", "60S"],
+      "go": {"id": "GO:0005840", "label": "ribosome"},
+      "summary": "The 80S eukaryotic ribosome is made of a 40S and a 60S subunit, built from four rRNAs (18S, 28S, 5.8S, 5S) and about 80 proteins. It translates mRNA into protein, either free in the cytosol or bound to the rough ER.",
+      "functions": ["mRNA translation", "Co-translational targeting to the ER (bound ribosomes)"],
+      "quantities": [
+        {"label": "Ribosomal proteins", "value": 80, "unit": "approx.", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 6"}]},
+        {"label": "Diameter", "value": [25, 30], "unit": "nm", "status": "approximate", "refs": [{"id": "alberts6", "at": "Ch. 6"}]},
+        {"label": "Ribosomes per mammalian cell", "value": "1e6 - 1e7", "unit": "order of magnitude", "status": "approximate", "refs": [{"id": "milo_phillips", "at": "Ch. 2"}]}
+      ],
+      "markers": [
+        {"gene": "RPS6", "protein": "Small ribosomal subunit protein eS6", "uniprot": "P62753", "role": "40S subunit"},
+        {"gene": "RPLP0", "protein": "Large ribosomal subunit protein uL10", "uniprot": "P05388", "role": "60S stalk"}
+      ],
+      "render_notes": "Screen-space points. Only a sample is drawn (bound on rough-ER sheets, free in small polysome clusters); the real count is orders of magnitude higher.",
+      "refs": [{"id": "alberts6", "at": "Ch. 6"}, {"id": "go2023", "at": "GO:0005840"}]
+    },
+    {
+      "id": "centrosome",
+      "name": "Centrosome",
+      "category": "Organelle (membraneless)",
+      "synonyms": ["centriole", "centrioles", "MTOC", "microtubule-organizing center", "pericentriolar material"],
+      "go": {"id": "GO:0005813", "label": "centrosome"},
+      "summary": "The main microtubule-organizing centre of animal cells. A pair of orthogonal centrioles, each a cylinder of nine triplet microtubules, sits in pericentriolar material that holds gamma-tubulin ring complexes, which nucleate microtubules.",
+      "functions": ["Microtubule nucleation and anchoring (minus ends)", "Spindle-pole organization in mitosis", "Basal-body template for cilia"],
+      "quantities": [
+        {"label": "Centrioles per G1 centrosome", "value": 2, "unit": "", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 16"}]},
+        {"label": "Microtubule triplets per centriole", "value": 9, "unit": "", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 16"}]},
+        {"label": "Centriole diameter", "value": [0.2, 0.25], "unit": "µm", "status": "approximate", "refs": [{"id": "alberts6", "at": "Ch. 16"}]},
+        {"label": "Centriole length", "value": [0.4, 0.5], "unit": "µm", "status": "approximate", "refs": [{"id": "alberts6", "at": "Ch. 16"}]}
+      ],
+      "markers": [
+        {"gene": "TUBG1", "protein": "Tubulin gamma-1 chain", "uniprot": "P23258", "role": "Microtubule nucleation"},
+        {"gene": "PCNT", "protein": "Pericentrin", "uniprot": "O95613", "role": "Pericentriolar scaffold"},
+        {"gene": "CETN2", "protein": "Centrin-2", "uniprot": "P41208", "role": "Centriole lumen"}
+      ],
+      "render_notes": "Two orthogonal centrioles of 9 x 3 microtubules inside a translucent pericentriolar cloud. PCM size is illustrative.",
+      "refs": [{"id": "alberts6", "at": "Ch. 16"}, {"id": "go2023", "at": "GO:0005813"}]
+    },
+    {
+      "id": "microtubule",
+      "name": "Microtubules",
+      "category": "Cytoskeleton",
+      "synonyms": ["microtubule", "tubulin", "MT"],
+      "go": {"id": "GO:0005874", "label": "microtubule"},
+      "summary": "Hollow polymers of alpha/beta-tubulin, 25 nm in outer diameter and usually built from 13 protofilaments. In interphase they radiate from the centrosome, minus ends inward and plus ends toward the periphery, and serve as tracks for kinesin and dynein motors.",
+      "functions": ["Tracks for organelle and vesicle transport", "Positioning of the Golgi and ER", "Mitotic spindle"],
+      "quantities": [
+        {"label": "Outer diameter", "value": 25, "unit": "nm", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 16"}]},
+        {"label": "Protofilaments (typical)", "value": 13, "unit": "", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 16"}]}
+      ],
+      "markers": [
+        {"gene": "TUBA1B", "protein": "Tubulin alpha-1B chain", "uniprot": "P68363", "role": "alpha-tubulin"},
+        {"gene": "TUBB", "protein": "Tubulin beta chain", "uniprot": "P07437", "role": "beta-tubulin"}
+      ],
+      "render_notes": "Lines with an exaggerated on-screen width. Paths are routed around the nucleus. Count and curvature are illustrative.",
+      "refs": [{"id": "alberts6", "at": "Ch. 16"}, {"id": "go2023", "at": "GO:0005874"}]
+    },
+    {
+      "id": "actin_cortex",
+      "name": "Actin cortex",
+      "category": "Cytoskeleton",
+      "synonyms": ["actin", "F-actin", "microfilament", "cortical actin"],
+      "go": {"id": "GO:0030864", "label": "cortical actin cytoskeleton"},
+      "summary": "A thin meshwork of actin filaments under the plasma membrane. It sets the cell's mechanical properties and drives shape change, endocytosis and membrane protrusions.",
+      "functions": ["Cortical tension and cell shape", "Endocytosis and membrane trafficking", "Anchoring of membrane proteins"],
+      "quantities": [
+        {"label": "Actin filament diameter", "value": [5, 9], "unit": "nm", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 16"}]}
+      ],
+      "markers": [
+        {"gene": "ACTB", "protein": "Actin, cytoplasmic 1", "uniprot": "P60709", "role": "beta-actin"}
+      ],
+      "render_notes": "Short tangential segments just inside the membrane. Density and segment length are illustrative.",
+      "refs": [{"id": "alberts6", "at": "Ch. 16"}, {"id": "go2023", "at": "GO:0030864"}]
+    },
+    {
+      "id": "keratin_if",
+      "name": "Keratin intermediate filaments",
+      "category": "Cytoskeleton",
+      "synonyms": ["intermediate filament", "keratin", "K8", "K18", "cytokeratin"],
+      "go": {"id": "GO:0045095", "label": "keratin filament"},
+      "summary": "Rope-like filaments about 10 nm in diameter that give cells mechanical resilience. Hepatocytes express keratins 8 and 18, which protect them against mechanical and toxic stress.",
+      "functions": ["Mechanical integrity", "Stress protection (hepatocyte K8/K18)"],
+      "quantities": [
+        {"label": "Filament diameter", "value": 10, "unit": "nm", "status": "textbook", "refs": [{"id": "alberts6", "at": "Ch. 16"}]}
+      ],
+      "markers": [
+        {"gene": "KRT8", "protein": "Keratin, type II cytoskeletal 8", "uniprot": "P05787", "role": "Hepatocyte type II keratin"},
+        {"gene": "KRT18", "protein": "Keratin, type I cytoskeletal 18", "uniprot": "P05783", "role": "Hepatocyte type I keratin"}
+      ],
+      "render_notes": "Wavy lines from the nuclear surface to the cortex. Illustrative.",
+      "refs": [{"id": "alberts6", "at": "Ch. 16"}, {"id": "ku2007", "at": ""}, {"id": "go2023", "at": "GO:0045095"}]
+    }
+  ]
+}

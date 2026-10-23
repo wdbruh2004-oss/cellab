@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "hepatocyte_reference_v1",
+  "name": "Hepatocyte - reference compartment model",
+  "description": "Generalized mammalian hepatocyte. The volume fraction and number of each discrete compartment reproduce Alberts et al., Table 12-2. Cell size lies inside the textbook hepatocyte diameter range.",
+  "seed": 20261023,
+  "composition_source": {"id": "alberts6", "at": "Ch. 12, Table 12-2"},
+  "cell": {
+    "shape": "ellipsoid",
+    "semi_axes_um": [12.0, 11.0, 9.0],
+    "status": "model",
+    "note": "Extents 24 x 22 x 18 µm, inside the 20-30 µm hepatocyte range. Real hepatocytes in tissue are polyhedral."
+  },
+  "compartments": [
+    {"id": "cytosol",          "structures": ["cytosol"],               "volume_fraction": 0.54, "count": 1,    "realization": "implicit"},
+    {"id": "mitochondria",     "structures": ["mitochondrion"],         "volume_fraction": 0.22, "count": 1700, "realization": "geometric"},
+    {"id": "rough_er",         "structures": ["rough_er"],              "volume_fraction": 0.09, "count": 1,    "realization": "representational"},
+    {"id": "smooth_er_golgi",  "structures": ["smooth_er", "golgi"],    "volume_fraction": 0.06, "count": null, "realization": "representational"},
+    {"id": "nucleus",          "structures": ["nucleus"],               "volume_fraction": 0.06, "count": 1,    "realization": "geometric"},
+    {"id": "peroxisomes",      "structures": ["peroxisome"],            "volume_fraction": 0.01, "count": 400,  "realization": "geometric"},
+    {"id": "lysosomes",        "structures": ["lysosome"],              "volume_fraction": 0.01, "count": 300,  "realization": "geometric"},
+    {"id": "endosomes",        "structures": ["endosome"],              "volume_fraction": 0.01, "count": 200,  "realization": "geometric"}
+  ],
+  "parameters": {
+    "nucleus_center_um": [-0.8, 0.4, 0.0],
+    "nucleus_axis_ratio": [1.0, 1.0, 0.8],
+    "mitochondrion_radius_um": {"mean": 0.35, "sd": 0.04, "min": 0.26, "max": 0.48},
+    "mitochondrion_length_cv": 0.35,
+    "spherical_organelle_radius_cv": 0.15,
+    "cortex_margin_um": 0.45,
+    "organelle_gap_um": 0.04,
+    "rough_er_sheet_scales": [1.10, 1.17, 1.24],
+    "perinuclear_exclusion_scale": 1.33,
+    "golgi_direction": [0.55, 0.75, 0.35],
+    "golgi_stacks": 4,
+    "golgi_cisternae_per_stack": 5,
+    "golgi_cisterna_radius_um": 0.75,
+    "nuclear_pore_count": 3500,
+    "nucleolus_radii_um": [0.85, 0.6],
+    "microtubule_count": 150,
+    "keratin_filament_count": 70,
+    "actin_segment_count": 2600,
+    "smooth_er_nodes": 420,
+    "ribosomes_bound_rendered": 14000,
+    "ribosomes_free_polysomes_rendered": 1400,
+    "chromatin_points": 9000,
+    "transport_vesicle_count": 90
+  }
+}

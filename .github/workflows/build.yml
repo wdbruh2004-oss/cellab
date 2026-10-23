@@ -1,0 +1,45 @@
+name: build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test-linux:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: System libraries for Qt/VTK under Xvfb
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb libegl1 libgl1-mesa-dri libxkbcommon-x11-0 libxcb-cursor0 \
+            libxcb-icccm4 libxcb-keysyms1 libxcb-image0 libxcb-render-util0 libxcb-xinerama0
+      - run: uv sync --frozen
+      - run: uv run ruff check src tests
+      - run: xvfb-run -a -s "-screen 0 1920x1200x24" uv run pytest -q
+      - run: ./packaging/build_linux.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CellLab-linux
+          path: build/CellLab-*-linux-x86_64.tar.gz
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Software OpenGL (Mesa) for the headless runner
+        uses: pyvista/setup-headless-display-action@v3
+      - name: Inno Setup
+        run: choco install innosetup -y --no-progress
+      - name: Build, self-test and package
+        shell: pwsh
+        run: ./packaging/build_windows.ps1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CellLab-windows
+          path: |
+            build/CellLab-*-win64-portable.zip
+            build/CellLab-*-win64-setup.exe

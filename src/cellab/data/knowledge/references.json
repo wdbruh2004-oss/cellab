@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "references": {
+    "alberts6": {
+      "short": "Alberts et al. 2014",
+      "citation": "Alberts B, Johnson A, Lewis J, Morgan D, Raff M, Roberts K, Walter P. Molecular Biology of the Cell. 6th ed. New York: Garland Science; 2014.",
+      "kind": "textbook"
+    },
+    "milo_phillips": {
+      "short": "Milo & Phillips 2016",
+      "citation": "Milo R, Phillips R. Cell Biology by the Numbers. New York: Garland Science; 2016. Online edition: book.bionumbers.org.",
+      "kind": "textbook"
+    },
+    "junqueira": {
+      "short": "Junqueira's Basic Histology",
+      "citation": "Mescher AL. Junqueira's Basic Histology: Text and Atlas. New York: McGraw Hill (liver chapter).",
+      "kind": "textbook"
+    },
+    "ku2007": {
+      "short": "Ku et al. 2007",
+      "citation": "Ku NO, Strnad P, Zhong BH, Tao GZ, Omary MB. Keratins let liver live: mutations predispose to liver disease and crosslinking generates Mallory-Denk bodies. Hepatology. 2007;46(5):1639-1649.",
+      "kind": "review"
+    },
+    "go2023": {
+      "short": "GO Consortium 2023",
+      "citation": "Gene Ontology Consortium; Aleksander SA, Balhoff J, Carbon S, et al. The Gene Ontology knowledgebase in 2023. Genetics. 2023;224(1):iyad031.",
+      "kind": "database",
+      "license": "CC BY 4.0"
+    },
+    "uniprot2023": {
+      "short": "UniProt Consortium 2023",
+      "citation": "UniProt Consortium. UniProt: the Universal Protein Knowledgebase in 2023. Nucleic Acids Res. 2023;51(D1):D523-D531.",
+      "kind": "database",
+      "license": "CC BY 4.0"
+    }
+  }
+}
